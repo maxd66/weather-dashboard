@@ -1,0 +1,76 @@
+/* Header area ------------------------ */
+header {
+    width: 100%;
+    background-color: blue;
+    color: white;
+    text-align: center;
+    padding: 10px 0px;
+    margin-bottom: 5px;
+}
+
+/* Makes entire main body a flex container */
+main {
+    display: flex;
+    flex-direction: row;
+}
+
+/* Search input and search button */
+form {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding: 10px 5px;
+}
+
+form input {
+    margin-bottom: 5px;
+}
+
+#submitBtn {
+    width: 50%;
+}
+
+.formContainer h3 {
+    border-bottom: 1px dotted gray;
+}
+
+/* Search History header and buttons */
+#searchHistory {
+    text-align: center;
+}
+
+.historyBtn {
+    background-color: red;
+    padding: 5px;
+    width: 90%;
+}
+
+/* Weather section -------------- */
+#weatherContainer {
+    margin-left: 10px;
+    width: 90%;
+}
+
+/* Current Weather */
+#currentWeather {
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 2px 10px 10px 10px;
+}
+
+#currentWeather h2 {
+    margin-top: 0px;
+}
+
+/* Future Weather */
+#forecast {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#box1, #box2, #box3, #box4, #box5 {
+    flex-basis: 15%;
+    margin: 2%;
+    background-color: purple;
+}

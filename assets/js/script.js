@@ -1,5 +1,5 @@
-var searchHistoryEl = $('#searchHistory')
-var formEl = $('#searchForm');
+var searchHistoryEl = document.getElementById('searchHistory');
+var formEl = document.getElementById("searchForm");
 // On load, site retrieves local storage
 function retrieveStorage() {
     var storedArr = JSON.parse(localStorage.getItem('searchHistory'));
@@ -13,7 +13,7 @@ function retrieveStorage() {
 function appendStorage(arr) {
     searchHistoryEl.innerHTML = ''
     for(var i = 0; i < arr.length; i++) {
-        var buttonEl = $('<button>');
+        var buttonEl = document.createElement('button');
         buttonEl.addClass('historyBtn');
         buttonEl.setAttribute('id', arr[i]);
         buttonEl.textContent = arr[i];
@@ -21,8 +21,10 @@ function appendStorage(arr) {
     };
 }
 // js listens for form submission
-var userInput = $('#userInput').value;
-formEl.addEventListener('submit', function(userInput) {
+var userInputEl = document.getElementById('userInput');
+formEl.addEventListener('submit', function(event) {
+    event.preventDefault();
+    var userInput = userInputEl.value;
     saveToStorage(userInput);
     // creates apiURL with user input for current weather
     //fetches with apiURL created and returns response for current weather with JSON
@@ -35,24 +37,27 @@ formEl.addEventListener('submit', function(userInput) {
 // saves submission to local storage
 function saveToStorage(input) {
     var storedArr = JSON.parse(localStorage.getItem('searchHistory'));
-    if (!storedArr.length) {
+    if (!storedArr) {
         storedArr = []
         storedArr.unshift(input)
-        localStorage.setItem('searchHistory', storedArr)
+        localStorage.setItem('searchHistory', JSON.stringify(storedArr))
     } else {
+        console.log(storedArr);
         storedArr.unshift(input)
-        localStorage.setItem('searchHistory', storedArr)
+        localStorage.setItem('searchHistory', JSON.stringify(storedArr))
     }
+    //have to for loop through conditional to make sure it doesn't print repeat history
     
 }
 
 // js listens for search history button clicks
-var historyBtnEl = $('.historyBtn')
+var historyBtnEl = document.querySelector('.historyBtn');
 searchHistoryEl.addEventListener('click', function(event) {
     if(event.target !== historyBtnEl) {
         return
     }
     var userPreviousSearch = event.target.getAttribute('id');
+    saveToStorage(userPreviousSearch);
     // creates apiURL with user input for current weather
     //fetches with apiURL created and returns response for current weather with JSON
     // appends information to the html if response is valid

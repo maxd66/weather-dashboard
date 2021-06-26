@@ -1,6 +1,6 @@
 var searchHistoryEl = document.getElementById('searchHistory');
 var formEl = document.getElementById("searchForm");
-// On load, site retrieves local storage
+// On load, site retrieves local storage 😀
 function retrieveStorage() {
     var storedArr = JSON.parse(localStorage.getItem('searchHistory'));
     if (!storedArr.length) {
@@ -14,7 +14,7 @@ function appendStorage(arr) {
     searchHistoryEl.innerHTML = ''
     for(var i = 0; i < arr.length; i++) {
         var buttonEl = document.createElement('button');
-        buttonEl.addClass('historyBtn');
+        buttonEl.setAttribute('class', 'historyBtn');
         buttonEl.setAttribute('id', arr[i]);
         buttonEl.textContent = arr[i];
         searchHistoryEl.appendChild(buttonEl);
@@ -26,6 +26,7 @@ formEl.addEventListener('submit', function(event) {
     event.preventDefault();
     var userInput = userInputEl.value;
     saveToStorage(userInput);
+    retrieveStorage();
     // creates apiURL with user input for current weather
     //fetches with apiURL created and returns response for current weather with JSON
     // appends information to the html if response is valid
@@ -34,7 +35,7 @@ formEl.addEventListener('submit', function(event) {
     // appends information to the html if response is valid
 });
 
-// saves submission to local storage
+// saves submission to local storage 😀
 function saveToStorage(input) {
     var storedArr = JSON.parse(localStorage.getItem('searchHistory'));
     if (!storedArr) {
@@ -58,6 +59,7 @@ searchHistoryEl.addEventListener('click', function(event) {
     }
     var userPreviousSearch = event.target.getAttribute('id');
     saveToStorage(userPreviousSearch);
+    
     // creates apiURL with user input for current weather
     //fetches with apiURL created and returns response for current weather with JSON
     // appends information to the html if response is valid
@@ -65,3 +67,5 @@ searchHistoryEl.addEventListener('click', function(event) {
     // fetches with apiURL created and returns response for current weather with JSON
     // appends information to the html if response is valid
 });
+
+retrieveStorage();

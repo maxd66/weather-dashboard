@@ -15,6 +15,10 @@ main {
 }
 
 /* Search input and search button */
+.formContainer {
+    width: 25%;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -44,6 +48,7 @@ form input {
     background-color: red;
     padding: 5px;
     width: 90%;
+    margin: 5px 0px;
 }
 
 /* Weather section -------------- */

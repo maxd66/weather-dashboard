@@ -3,7 +3,7 @@ var formEl = document.getElementById("searchForm");
 // On load, site retrieves local storage 😀
 function retrieveStorage() {
     var storedArr = JSON.parse(localStorage.getItem('searchHistory'));
-    if (storedArr.length == 0) {
+    if (!storedArr) {
         return
     }
     appendStorage(storedArr);
@@ -25,11 +25,10 @@ var userInputEl = document.getElementById('userInput');
 formEl.addEventListener('submit', function(event) {
     event.preventDefault();
     var userInput = userInputEl.value;
+    generateFetch(userInput);
     saveToStorage(userInput);
     retrieveStorage();
-    // creates apiURL with user input for current weather
-    //fetches with apiURL created and returns response for current weather with JSON
-    generateFetch(userInput);
+
     // appends information to the html if response is valid
     // creates apiURL with user input for forecast
     // fetches with apiURL created and returns response for current weather with JSON
@@ -39,11 +38,18 @@ formEl.addEventListener('submit', function(event) {
 // saves submission to local storage 😀
 function saveToStorage(input) {
     var storedArr = JSON.parse(localStorage.getItem('searchHistory'));
+    console.log(storedArr);
+
     if (!storedArr) {
         storedArr = []
         storedArr.unshift(input)
         localStorage.setItem('searchHistory', JSON.stringify(storedArr))
     } else {
+        for(i = 0; i < storedArr.length; i++) {
+            if(storedArr[i] == input) {
+                storedArr.splice(i, 1);
+            }
+        }
         storedArr.unshift(input)
         localStorage.setItem('searchHistory', JSON.stringify(storedArr))
     }
@@ -58,8 +64,8 @@ searchHistoryEl.addEventListener('click', function(event) {
         return
     }
     var userPreviousSearch = event.target.getAttribute('id');
-    saveToStorage(userPreviousSearch);
     generateFetch(userPreviousSearch);
+    saveToStorage(userPreviousSearch);
     
     // creates apiURL with user input for current weather
     //fetches with apiURL created and returns response for current weather with JSON
@@ -72,14 +78,15 @@ searchHistoryEl.addEventListener('click', function(event) {
 function generateFetch(input) {
     var apiURL = 'https://api.openweathermap.org/data/2.5/weather?q='+ input + '&units=imperial&appid=3aed22d5f8506d1b45fba35d9603cc88';
     // fetch request
-    fetch(apiURL)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) {
-            console.log(data)
-            appendCurrentData(data);
-        })
+    fetch(apiURL).then(function (response) {
+        if(response.ok) {
+            response.json().then(function(data) {
+                appendCurrentData(data);
+            });
+        }else {
+            alert('The city entered was not found in the Open Weather API database.')
+        }
+    })
 }
 
 function appendCurrentData(data) {
@@ -101,7 +108,6 @@ function appendCurrentData(data) {
     currentWeatherEl.appendChild(tempEl);
     currentWeatherEl.appendChild(windEl);
     currentWeatherEl.appendChild(humidityEl);
-
 }
 retrieveStorage();
 

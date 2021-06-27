@@ -79,3 +79,22 @@ form input {
     margin: 2%;
     background-color: purple;
 }
+
+.uvDanger {
+    padding: 2px;
+    border-radius: 5px;
+    background-color: red;
+}
+
+.uvModerate {
+    padding: 2px;
+    border-radius: 5px;
+    background-color: yellow;
+    width: 25%;
+}
+
+.uvGood {
+    padding: 2px;
+    border-radius: 5px;
+    background-color: lightgreen;
+}

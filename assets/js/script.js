@@ -3,7 +3,7 @@ var formEl = document.getElementById("searchForm");
 // On load, site retrieves local storage 😀
 function retrieveStorage() {
     var storedArr = JSON.parse(localStorage.getItem('searchHistory'));
-    if (!storedArr.length) {
+    if (storedArr.length == 0) {
         return
     }
     appendStorage(storedArr);
@@ -27,9 +27,9 @@ formEl.addEventListener('submit', function(event) {
     var userInput = userInputEl.value;
     saveToStorage(userInput);
     retrieveStorage();
-    generateFetch(userInput);
     // creates apiURL with user input for current weather
     //fetches with apiURL created and returns response for current weather with JSON
+    generateFetch(userInput);
     // appends information to the html if response is valid
     // creates apiURL with user input for forecast
     // fetches with apiURL created and returns response for current weather with JSON
@@ -44,7 +44,6 @@ function saveToStorage(input) {
         storedArr.unshift(input)
         localStorage.setItem('searchHistory', JSON.stringify(storedArr))
     } else {
-        console.log(storedArr);
         storedArr.unshift(input)
         localStorage.setItem('searchHistory', JSON.stringify(storedArr))
     }
@@ -55,12 +54,9 @@ function saveToStorage(input) {
 // js listens for search history button clicks😀
 var historyBtnEl = document.querySelector('.historyBtn')
 searchHistoryEl.addEventListener('click', function(event) {
-    console.log(event.target);
-    console.log(historyBtnEl);
-    if(event.target !== historyBtnEl) {
+    if(!event.target.classList.contains('historyBtn')) {
         return
     }
-    alert('this works')
     var userPreviousSearch = event.target.getAttribute('id');
     saveToStorage(userPreviousSearch);
     generateFetch(userPreviousSearch);
@@ -82,8 +78,30 @@ function generateFetch(input) {
         })
         .then(function(data) {
             console.log(data)
+            appendCurrentData(data);
         })
 }
 
+function appendCurrentData(data) {
+    var currentWeatherEl = document.querySelector('#currentWeather')
+    var cityName = data.name;
+    var temp = data.main.temp;
+    var wind = data.wind.speed;
+    var humidity = data.main.humidity;
+    currentWeatherEl.innerHTML = ''
+    var cityNameEl = document.createElement('h2')
+    var tempEl = document.createElement('p');
+    var windEl = document.createElement('p');
+    var humidityEl = document.createElement('p')
+    cityNameEl.textContent = cityName;
+    tempEl.textContent = 'Temperature: ' + temp;
+    windEl.textContent = 'Wind: ' + wind + 'mph';
+    humidityEl.textContent = 'Humidity: ' + humidity + '%';
+    currentWeatherEl.appendChild(cityNameEl);
+    currentWeatherEl.appendChild(tempEl);
+    currentWeatherEl.appendChild(windEl);
+    currentWeatherEl.appendChild(humidityEl);
+
+}
 retrieveStorage();
 

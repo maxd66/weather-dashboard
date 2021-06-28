@@ -119,7 +119,7 @@ function appendCurrentData(data) {
     iconEl.setAttribute('src', iconURL)
     iconEl.setAttribute('alt', 'Icon for weather description')
     cityNameEl.textContent = cityName + ' ' + date;
-    tempEl.textContent = 'Temperature: ' + temp;
+    tempEl.textContent = 'Temperature: ' + temp + "° F";
     windEl.textContent = 'Wind: ' + wind + 'mph';
     humidityEl.textContent = 'Humidity: ' + humidity + '%';
     currentWeatherEl.appendChild(cityNameEl);
@@ -169,7 +169,7 @@ function appendForecast(data) {
     iconEl.setAttribute('src', iconURL)
     iconEl.setAttribute('alt', 'Icon for weather description')
     day1DateEl.textContent = day1Date
-    day1TempEl.textContent = 'Temp: ' + day1Temp;
+    day1TempEl.textContent = 'Temp: ' + day1Temp + "° F";
     day1WindEl.textContent = 'Wind Speed: ' + day1Wind + 'mph';
     day1HumidityEl.textContent = 'Humidity: ' + day1Humidity + '%';
     box1El.appendChild(day1DateEl);
@@ -191,7 +191,7 @@ function appendForecast(data) {
     iconEl.setAttribute('src', iconURL)
     iconEl.setAttribute('alt', 'Icon for weather description')
     day2DateEl.textContent = day2Date
-    day2TempEl.textContent = 'Temp: ' + day2Temp;
+    day2TempEl.textContent = 'Temp: ' + day2Temp + "° F";
     day2WindEl.textContent = 'Wind Speed: ' + day2Wind + 'mph';
     day2HumidityEl.textContent = 'Humidity: ' + day2Humidity + '%';
     box2El.appendChild(day2DateEl);
@@ -213,7 +213,7 @@ function appendForecast(data) {
     iconEl.setAttribute('src', iconURL)
     iconEl.setAttribute('alt', 'Icon for weather description')
     day3DateEl.textContent = day3Date;
-    day3TempEl.textContent = 'Temp: ' + day3Temp;
+    day3TempEl.textContent = 'Temp: ' + day3Temp + "° F";
     day3WindEl.textContent = 'Wind Speed: ' + day3Wind + 'mph';
     day3HumidityEl.textContent = 'Humidity: ' + day3Humidity + '%';
     box3El.appendChild(day3DateEl);
@@ -235,7 +235,7 @@ function appendForecast(data) {
     iconEl.setAttribute('src', iconURL)
     iconEl.setAttribute('alt', 'Icon for weather description')
     day4DateEl.textContent = day4Date;
-    day4TempEl.textContent = 'Temp: ' + day4Temp;
+    day4TempEl.textContent = 'Temp: ' + day4Temp + "° F";
     day4WindEl.textContent = 'Wind Speed: ' + day4Wind + 'mph';
     day4HumidityEl.textContent = 'Humidity: ' + day4Humidity + '%';
     box4El.appendChild(day4DateEl);
@@ -257,7 +257,7 @@ function appendForecast(data) {
     iconEl.setAttribute('src', iconURL)
     iconEl.setAttribute('alt', 'Icon for weather description')
     day5DateEl.textContent = day5Date
-    day5TempEl.textContent = 'Temp: ' + day5Temp;
+    day5TempEl.textContent = 'Temp: ' + day5Temp + "° F";
     day5WindEl.textContent = 'Wind Speed: ' + day5Wind + 'mph';
     day5HumidityEl.textContent = 'Humidity: ' + day5Humidity + '%';
     box5El.appendChild(day5DateEl);

@@ -29,7 +29,6 @@ formEl.addEventListener('submit', function(event) {
     var userInput = userInputEl.value.trim();
     if(userInput){
         generateFetch(userInput);
-        saveToStorage(userInput);
         retrieveStorage();
     }
     // creates apiURL with user input for forecast
@@ -66,7 +65,6 @@ searchHistoryEl.addEventListener('click', function(event) {
     }
     var userPreviousSearch = event.target.getAttribute('id');
     generateFetch(userPreviousSearch);
-    saveToStorage(userPreviousSearch);
 });
 
 function generateFetch(input) {
@@ -77,6 +75,7 @@ function generateFetch(input) {
             response.json().then(function(data) {
                 appendCurrentData(data);
                 fetchForecast(data);
+                saveToStorage(input);
             });
         }else {
             alert('The city entered was not found in the Open Weather API database.')
@@ -123,7 +122,7 @@ function appendCurrentData(data) {
     windEl.textContent = 'Wind: ' + wind + 'mph';
     humidityEl.textContent = 'Humidity: ' + humidity + '%';
     currentWeatherEl.appendChild(cityNameEl);
-    currentWeatherEl.appendChild(iconEl);
+    cityNameEl.append(iconEl);
     currentWeatherEl.appendChild(tempEl);
     currentWeatherEl.appendChild(windEl);
     currentWeatherEl.appendChild(humidityEl);

@@ -2,7 +2,7 @@
 
 var searchHistoryEl = document.getElementById('searchHistory');
 var formEl = document.getElementById("searchForm");
-// On load, site retrieves local storage 😀
+// On load, site retrieves local storage 
 function retrieveStorage() {
     var storedArr = JSON.parse(localStorage.getItem('searchHistory'));
     if (!storedArr) {
@@ -11,7 +11,7 @@ function retrieveStorage() {
     appendStorage(storedArr);
 }
 
-// appends retrieved array to search history in the form of buttons😀
+// appends retrieved array to search history in the form of buttons
 function appendStorage(arr) {
     searchHistoryEl.innerHTML = ''
     for(var i = 0; i < arr.length; i++) {
@@ -22,20 +22,22 @@ function appendStorage(arr) {
         searchHistoryEl.appendChild(buttonEl);
     };
 }
-// js listens for form submission😀
+// js listens for form submission
 var userInputEl = document.getElementById('userInput');
 formEl.addEventListener('submit', function(event) {
     event.preventDefault();
-    var userInput = userInputEl.value;
-    generateFetch(userInput);
-    saveToStorage(userInput);
-    retrieveStorage();
+    var userInput = userInputEl.value.trim();
+    if(userInput){
+        generateFetch(userInput);
+        saveToStorage(userInput);
+        retrieveStorage();
+    }
     // creates apiURL with user input for forecast
     // fetches with apiURL created and returns response for current weather with JSON
     // appends information to the html if response is valid
 });
 
-// saves submission to local storage 😀
+// saves submission to local storage
 function saveToStorage(input) {
     var storedArr = JSON.parse(localStorage.getItem('searchHistory'));
     console.log(storedArr);
@@ -53,11 +55,10 @@ function saveToStorage(input) {
         storedArr.unshift(input)
         localStorage.setItem('searchHistory', JSON.stringify(storedArr))
     }
-    //have to for loop through conditional to make sure it doesn't print repeat history
     
 }
 
-// js listens for search history button clicks😀
+// js listens for search history button clicks
 var historyBtnEl = document.querySelector('.historyBtn')
 searchHistoryEl.addEventListener('click', function(event) {
     if(!event.target.classList.contains('historyBtn')) {
@@ -66,11 +67,6 @@ searchHistoryEl.addEventListener('click', function(event) {
     var userPreviousSearch = event.target.getAttribute('id');
     generateFetch(userPreviousSearch);
     saveToStorage(userPreviousSearch);
-    //fetches with apiURL created and returns response for current weather with JSON
-    // appends information to the html if response is valid
-    // creates apiURL with user input for forecast
-    // fetches with apiURL created and returns response for current weather with JSON
-    // appends information to the html if response is valid
 });
 
 function generateFetch(input) {
@@ -106,6 +102,8 @@ function fetchForecast (data) {
 
 function appendCurrentData(data) {
     var currentWeatherEl = document.querySelector('#currentWeather')
+    var iconURL = "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png";
+    var date = moment().format('YYYY-MM-DD');
     var cityName = data.name;
     var temp = data.main.temp;
     var wind = data.wind.speed;
@@ -114,19 +112,26 @@ function appendCurrentData(data) {
     lon = data.coord.lon;
     currentWeatherEl.innerHTML = ''
     var cityNameEl = document.createElement('h2')
+    var iconEl = document.createElement('img')
     var tempEl = document.createElement('p');
     var windEl = document.createElement('p');
     var humidityEl = document.createElement('p')
-    cityNameEl.textContent = cityName;
+    iconEl.setAttribute('src', iconURL)
+    iconEl.setAttribute('alt', 'Icon for weather description')
+    cityNameEl.textContent = cityName + ' ' + date;
     tempEl.textContent = 'Temperature: ' + temp;
     windEl.textContent = 'Wind: ' + wind + 'mph';
     humidityEl.textContent = 'Humidity: ' + humidity + '%';
     currentWeatherEl.appendChild(cityNameEl);
+    currentWeatherEl.appendChild(iconEl);
     currentWeatherEl.appendChild(tempEl);
     currentWeatherEl.appendChild(windEl);
     currentWeatherEl.appendChild(humidityEl);
 }
 
+//this function is a big one, but there are just a few too many variables to make
+//me feel like it was worth drying up, maybe with more time in the future I can
+//come back to it.
 function appendForecast(data) {
     var currentWeatherEl = document.querySelector('#currentWeather')
     var uviEl = document.createElement('p');
@@ -151,71 +156,119 @@ function appendForecast(data) {
     box4El.innerHTML = ''
     box5El.innerHTML = ''
     //day 1
+    var day1Date = moment().add(1, 'd').format('YYYY-MM-DD')
+    var iconURL = "http://openweathermap.org/img/wn/" + data.daily[0].weather[0].icon + "@2x.png";
     var day1Temp = data.daily[0].temp.day;
     var day1Wind = data.daily[0].wind_speed;
     var day1Humidity = data.daily[0].humidity;
+    var day1DateEl = document.createElement('h3');
+    var iconEl = document.createElement('img')
     var day1TempEl = document.createElement('p');
     var day1WindEl = document.createElement('p');
     var day1HumidityEl = document.createElement('p');
+    iconEl.setAttribute('src', iconURL)
+    iconEl.setAttribute('alt', 'Icon for weather description')
+    day1DateEl.textContent = day1Date
     day1TempEl.textContent = 'Temp: ' + day1Temp;
     day1WindEl.textContent = 'Wind Speed: ' + day1Wind + 'mph';
     day1HumidityEl.textContent = 'Humidity: ' + day1Humidity + '%';
+    box1El.appendChild(day1DateEl);
+    box1El.appendChild(iconEl);
     box1El.appendChild(day1TempEl);
     box1El.appendChild(day1WindEl);
     box1El.appendChild(day1HumidityEl);
     //day 2
+    var day2Date = moment().add(2, 'd').format('YYYY-MM-DD')
+    var iconURL = "http://openweathermap.org/img/wn/" + data.daily[1].weather[0].icon + "@2x.png";
     var day2Temp = data.daily[1].temp.day;
     var day2Wind = data.daily[1].wind_speed;
     var day2Humidity = data.daily[1].humidity;
+    var day2DateEl = document.createElement('h3');
+    var iconEl = document.createElement('img')
     var day2TempEl = document.createElement('p');
     var day2WindEl = document.createElement('p');
     var day2HumidityEl = document.createElement('p');
+    iconEl.setAttribute('src', iconURL)
+    iconEl.setAttribute('alt', 'Icon for weather description')
+    day2DateEl.textContent = day2Date
     day2TempEl.textContent = 'Temp: ' + day2Temp;
     day2WindEl.textContent = 'Wind Speed: ' + day2Wind + 'mph';
     day2HumidityEl.textContent = 'Humidity: ' + day2Humidity + '%';
+    box2El.appendChild(day2DateEl);
+    box2El.appendChild(iconEl);
     box2El.appendChild(day2TempEl);
     box2El.appendChild(day2WindEl);
     box2El.appendChild(day2HumidityEl);
     //day 3
+    var day3Date = moment().add(3, 'd').format('YYYY-MM-DD')
+    var iconURL = "http://openweathermap.org/img/wn/" + data.daily[2].weather[0].icon + "@2x.png";
     var day3Temp = data.daily[2].temp.day;
     var day3Wind = data.daily[2].wind_speed;
     var day3Humidity = data.daily[2].humidity;
+    var day3DateEl = document.createElement('h3');
+    var iconEl = document.createElement('img')
     var day3TempEl = document.createElement('p');
     var day3WindEl = document.createElement('p');
     var day3HumidityEl = document.createElement('p');
+    iconEl.setAttribute('src', iconURL)
+    iconEl.setAttribute('alt', 'Icon for weather description')
+    day3DateEl.textContent = day3Date;
     day3TempEl.textContent = 'Temp: ' + day3Temp;
     day3WindEl.textContent = 'Wind Speed: ' + day3Wind + 'mph';
     day3HumidityEl.textContent = 'Humidity: ' + day3Humidity + '%';
+    box3El.appendChild(day3DateEl);
+    box3El.appendChild(iconEl);
     box3El.appendChild(day3TempEl);
     box3El.appendChild(day3WindEl);
     box3El.appendChild(day3HumidityEl);
     //day 4
+    var day4Date = moment().add(4, 'd').format('YYYY-MM-DD')
+    var iconURL = "http://openweathermap.org/img/wn/" + data.daily[3].weather[0].icon + "@2x.png";
     var day4Temp = data.daily[3].temp.day;
     var day4Wind = data.daily[3].wind_speed;
     var day4Humidity = data.daily[3].humidity;
+    var day4DateEl = document.createElement('h3');
+    var iconEl = document.createElement('img')
     var day4TempEl = document.createElement('p');
     var day4WindEl = document.createElement('p');
     var day4HumidityEl = document.createElement('p');
+    iconEl.setAttribute('src', iconURL)
+    iconEl.setAttribute('alt', 'Icon for weather description')
+    day4DateEl.textContent = day4Date;
     day4TempEl.textContent = 'Temp: ' + day4Temp;
     day4WindEl.textContent = 'Wind Speed: ' + day4Wind + 'mph';
     day4HumidityEl.textContent = 'Humidity: ' + day4Humidity + '%';
+    box4El.appendChild(day4DateEl);
+    box4El.appendChild(iconEl);
     box4El.appendChild(day4TempEl);
     box4El.appendChild(day4WindEl);
     box4El.appendChild(day4HumidityEl);
     // day 5
+    var day5Date = moment().add(5, 'd').format('YYYY-MM-DD')
+    var iconURL = "http://openweathermap.org/img/wn/" + data.daily[4].weather[0].icon + "@2x.png";
     var day5Temp = data.daily[4].temp.day;
     var day5Wind = data.daily[4].wind_speed;
     var day5Humidity = data.daily[4].humidity;
+    var day5DateEl = document.createElement('h3');
+    var iconEl = document.createElement('img')
     var day5TempEl = document.createElement('p');
     var day5WindEl = document.createElement('p');
     var day5HumidityEl = document.createElement('p');
+    iconEl.setAttribute('src', iconURL)
+    iconEl.setAttribute('alt', 'Icon for weather description')
+    day5DateEl.textContent = day5Date
     day5TempEl.textContent = 'Temp: ' + day5Temp;
     day5WindEl.textContent = 'Wind Speed: ' + day5Wind + 'mph';
     day5HumidityEl.textContent = 'Humidity: ' + day5Humidity + '%';
+    box5El.appendChild(day5DateEl);
+    box5El.appendChild(iconEl);
     box5El.appendChild(day5TempEl);
     box5El.appendChild(day5WindEl);
     box5El.appendChild(day5HumidityEl);
 }
 
 retrieveStorage();
+var date = moment().format('YYYY-MM-DD');
+console.log(date);
+
 

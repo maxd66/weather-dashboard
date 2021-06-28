@@ -1,7 +1,7 @@
 /* Header area ------------------------ */
 header {
     width: 100%;
-    background-color: blue;
+    background-color: rgb(9, 144, 255);
     color: white;
     text-align: center;
     padding: 10px 0px;
@@ -28,11 +28,17 @@ form {
 }
 
 form input {
-    margin-bottom: 5px;
+    border-radius: 5px 5px 0px 0px;
+    border: 1px solid gray;
+    padding: 3px 0px 3px 3px;
 }
 
 #submitBtn {
-    width: 50%;
+    background-color: rgb(9, 144, 255);
+    color: white;
+    border-radius: 0px 0px 5px 5px;
+    border: none;
+    padding: 5px 0px;
 }
 
 .formContainer h3 {
@@ -77,7 +83,9 @@ form input {
 #box1, #box2, #box3, #box4, #box5 {
     flex-basis: 15%;
     margin: 2%;
+    padding-left: 5px;
     background-color: purple;
+    color: white;
 }
 
 .uvDanger {

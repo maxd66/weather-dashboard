@@ -268,15 +268,25 @@ function appendForecast(data) {
 
 // Background image logic
 function replaceImage() {
-    currentTime = moment('H');
+    currentTime = moment().format('H');
+    console.log(currentTime)
     if(currentTime < 5 || currentTime > 20) {
         $('html').attr('style', 'background-image: url(./assets/images/night.jpg); background-position: center; background-size: cover; height: 100%; width: 100%;')
     } else if(currentTime >= 5 && currentTime < 9) {
-        
+        $('html').attr('style', 'background-image: url(./assets/images/sunrise.jpg); background-position: center; background-size: cover; height: 100%; width: 100%;')
+    } else if(currentTime >= 9 && currentTime < 17) {
+        $('html').attr('style', 'background-image: url(./assets/images/day.jpg); background-position: center; background-size: cover; height: 100%; width: 100%;')
+    } else if(currentTime >= 17 && currentTime <=20) {
+        $('html').attr('style', 'background-image: url(./assets/images/sunset.jpg); background-position: center; background-size: cover; height: 100%; width: 100%;')
     }
 }
 
+setInterval(function() {
+    replaceImage();
+}, 60000);
+
 retrieveStorage();
+replaceImage();
 var date = moment().format('YYYY-MM-DD');
 console.log(date);
 

@@ -29,7 +29,6 @@ formEl.addEventListener('submit', function(event) {
     var userInput = userInputEl.value.trim();
     if(userInput){
         generateFetch(userInput);
-        retrieveStorage();
     }
     // creates apiURL with user input for forecast
     // fetches with apiURL created and returns response for current weather with JSON
@@ -76,6 +75,7 @@ function generateFetch(input) {
                 appendCurrentData(data);
                 fetchForecast(data);
                 saveToStorage(input);
+                retrieveStorage();
             });
         }else {
             alert('The city entered was not found in the Open Weather API database.')

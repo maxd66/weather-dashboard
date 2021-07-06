@@ -1,3 +1,12 @@
+html {
+    background-image: url(../images/placeholder.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}
+
 /* Header area ------------------------ */
 header {
     width: 100%;
@@ -96,6 +105,7 @@ form input {
     border: 1px solid black;
     border-radius: 3px;
     padding: 2px 10px 10px 10px;
+    background-color: whitesmoke;
 }
 
 #currentWeather h2 {

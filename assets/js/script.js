@@ -271,7 +271,9 @@ function replaceImage() {
     currentTime = moment('H');
     if(currentTime < 5 || currentTime > 20) {
         $('html').attr('style', 'background-image: url(./assets/images/night.jpg); background-position: center; background-size: cover; height: 100%; width: 100%;')
-    } else if(currentTime >= 5 && currentTime < 9)
+    } else if(currentTime >= 5 && currentTime < 9) {
+        
+    }
 }
 
 retrieveStorage();
